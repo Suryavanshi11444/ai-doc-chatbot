@@ -3,7 +3,7 @@ export default function WorkspaceTopbar({ theme, toggleTheme, setMobileSidebarOp
     <header className="workspace-topbar panel">
       <div>
         <p className="eyebrow">AI document workspace</p>
-        <h1>Chat with uploaded documents</h1>
+        <h1>Chat with your uploaded documents</h1>
       </div>
 
       <div className="topbar-actions">

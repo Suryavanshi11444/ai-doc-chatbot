@@ -15,14 +15,14 @@ export default function WorkspaceHero({
           <h2>Document ingestion pipeline</h2>
         </div>
         <button type="button" className="theme-toggle" onClick={openFilePicker}>
-          Upload PDF
+          Upload document
         </button>
       </div>
 
       <div className="hero-copy">
         <p>
-          PDF uploads are extracted, chunked, embedded, and stored in ChromaDB. Use the chat panel to ask semantic
-          questions against the active document.
+          Uploaded documents are extracted, chunked, embedded, and stored in ChromaDB. Use the chat panel to ask
+          semantic questions against the active document.
         </p>
         <div className="pill-row">
           <span className="pill">Dark mode</span>

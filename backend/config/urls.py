@@ -17,11 +17,32 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import include, path
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+
+def home(request):
+    return JsonResponse(
+        {
+            'message': 'AI Doc Chatbot backend is running.',
+            'frontend_url': settings.FRONTEND_URL,
+            'api_base': '/api/',
+            'endpoints': {
+                'auth': '/api/token/',
+                'refresh': '/api/token/refresh/',
+                'register': '/api/register/',
+                'documents': '/api/documents/',
+                'upload': '/api/upload/',
+                'chat': '/api/chat/',
+                'history': '/api/history/',
+            },
+        }
+    )
+
 urlpatterns = [
+    path('', home),
     path('admin/', admin.site.urls),
     path('api/', include('chatbot.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

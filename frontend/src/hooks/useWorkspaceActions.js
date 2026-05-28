@@ -14,6 +14,24 @@ export default function useWorkspaceActions(requestJson, session, data) {
   const [historyDrawerOpen, setHistoryDrawerOpen] = useState(false)
   const [previewDocument, setPreviewDocument] = useState(null)
 
+  function isSupportedDocument(file) {
+    if (!file) return false
+
+    const fileName = (file.name || '').toLowerCase()
+    const mimeType = (file.type || '').toLowerCase()
+
+    return (
+      mimeType.includes('pdf') ||
+      mimeType.includes('word') ||
+      mimeType.includes('text') ||
+      fileName.endsWith('.pdf') ||
+      fileName.endsWith('.docx') ||
+      fileName.endsWith('.txt') ||
+      fileName.endsWith('.md') ||
+      fileName.endsWith('.csv')
+    )
+  }
+
   async function loadDocumentsAndHistory() {
     const [docs, chatHistory] = await Promise.all([requestJson('/documents/'), requestJson('/history/')])
     data.setDocuments(Array.isArray(docs) ? docs : [])
@@ -39,8 +57,8 @@ export default function useWorkspaceActions(requestJson, session, data) {
   }
 
   async function handleUpload(file) {
-    if (!file || !file.type.includes('pdf')) {
-      session.setAuthError('Please upload a PDF file.')
+    if (!isSupportedDocument(file)) {
+      session.setAuthError('Please upload a supported document file such as PDF, DOCX, TXT, MD, or CSV.')
       return
     }
 
@@ -57,9 +75,9 @@ export default function useWorkspaceActions(requestJson, session, data) {
       if (uploadedDocument?.id) {
         data.setSelectedDocumentId(uploadedDocument.id)
       }
-      session.setAuthMessage('PDF uploaded and indexed successfully.')
+      session.setAuthMessage('Document uploaded and indexed successfully.')
     } catch {
-      session.setAuthError('Upload failed. Confirm the backend is running and the file is a PDF.')
+      session.setAuthError('Upload failed. Confirm the backend is running and the file is a supported document.')
     } finally {
       setIsUploading(false)
     }
@@ -123,7 +141,7 @@ export default function useWorkspaceActions(requestJson, session, data) {
       data.setMessages((current) => [...current, assistantBubble])
       await loadDocumentsAndHistory()
     } catch (error) {
-      session.setAuthError(error.message || 'Chat request failed. Make sure Ollama is running and the backend can reach it.')
+      session.setAuthError(error.message || 'Chat request failed. Make sure your Gemini API key is configured and the backend can reach Google.')
       data.setMessages((current) => current.slice(0, -1))
     } finally {
       setIsSending(false)

@@ -53,7 +53,7 @@ export default function WorkspaceSidebar({
       </div>
 
       <div className="sidebar-section">
-        <div className="section-label">Upload PDF</div>
+        <div className="section-label">Upload document</div>
         <div
           className={dragActive ? 'dropzone active' : 'dropzone'}
           onDragOver={(event) => {
@@ -71,7 +71,7 @@ export default function WorkspaceSidebar({
           <input
             ref={fileInputRef}
             type="file"
-            accept="application/pdf"
+            accept="application/pdf,.pdf,.docx,.txt,.md,.csv"
             hidden
             onChange={(event) => {
               const file = event.target.files?.[0]
@@ -79,8 +79,8 @@ export default function WorkspaceSidebar({
               event.target.value = ''
             }}
           />
-          <span className="dropzone-title">Drag & drop PDFs here</span>
-          <span className="dropzone-subtitle">or click to browse files</span>
+          <span className="dropzone-title">Drag & drop documents here</span>
+          <span className="dropzone-subtitle">or click to browse PDF, DOCX, TXT, MD, or CSV files</span>
           {isUploading ? <TypingDots /> : null}
         </div>
       </div>

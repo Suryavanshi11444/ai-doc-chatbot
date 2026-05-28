@@ -85,9 +85,25 @@ def upload_pdf(request):
 		file=pdf,
 	)
 
-	text = extract_text(doc.file.path)
+	try:
+		text = extract_text(doc.file.path)
+	except ValueError as error:
+		doc.file.delete(save=False)
+		doc.delete()
+		return Response({'detail': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+
+	if not text.strip():
+		doc.file.delete(save=False)
+		doc.delete()
+		return Response({'detail': 'No extractable text was found in the uploaded document.'}, status=status.HTTP_400_BAD_REQUEST)
+
 	chunks = chunk_text(text)
-	store_document(doc.id, chunks)
+	try:
+		store_document(doc.id, chunks)
+	except RuntimeError as error:
+		doc.file.delete(save=False)
+		doc.delete()
+		return Response({'detail': str(error)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 	return Response(DocumentSerializer(doc).data, status=status.HTTP_201_CREATED)
 

@@ -516,6 +516,7 @@
 .workspace-topbar {
 	border-radius: 2rem;
 	padding: 1.1rem 1.25rem;
+	align-items: start;
 }
 
 .stats-grid,
@@ -534,7 +535,16 @@
 }
 
 .stat-card strong {
-	font-size: 1.8rem;
+	font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+	line-height: 1.05;
+	word-break: break-word;
+}
+
+.stat-card {
+	min-width: 0;
+	display: grid;
+	gap: 0.4rem;
+	align-content: start;
 }
 
 .hero-panel,
@@ -569,11 +579,16 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
+	min-width: 0;
 }
 
 .panel-chip {
 	font-weight: 700;
 	color: var(--text-soft);
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .chat-feed {
@@ -635,6 +650,76 @@
 
 .bubble-content h4 {
 	font-size: 0.95rem;
+}
+
+.hero-copy p,
+.preview-card p,
+.empty-chat p,
+.bubble-content p,
+.helper-text,
+.section-label,
+.dropzone-subtitle,
+.hero-panel p,
+.chat-panel p,
+.auth-hero p {
+	line-height: 1.65;
+}
+
+.preview-card strong,
+.list-card strong,
+.history-item strong,
+.account-card strong,
+.panel h2 {
+	overflow-wrap: anywhere;
+}
+
+.list-card > div:first-child,
+.history-item > div:first-child {
+	min-width: 0;
+}
+
+.list-card span,
+.history-item span,
+.account-card span,
+.preview-card p {
+	overflow-wrap: anywhere;
+}
+
+.list-card strong,
+.history-item strong {
+	display: block;
+	line-height: 1.25;
+}
+
+.card-actions,
+.topbar-actions,
+.form-actions {
+	flex-wrap: wrap;
+}
+
+.bubble-meta,
+.panel-header,
+.section-row,
+.detail-row,
+.sidebar-top,
+.sidebar-actions,
+.topbar-actions {
+	min-width: 0;
+}
+
+.bubble-meta span:last-child,
+.panel-chip,
+.stat-card span,
+.helper-text {
+	white-space: nowrap;
+}
+
+.panel-header > div,
+.workspace-topbar > div:first-child,
+.preview-card > div,
+.hero-copy,
+.account-card {
+	min-width: 0;
 }
 
 .markdown-list {
@@ -783,6 +868,13 @@
 	.preview-drawer,
 	.history-drawer {
 		width: 100%;
+	}
+
+	.panel-chip,
+	.bubble-meta span:last-child,
+	.helper-text,
+	.stat-card span {
+		white-space: normal;
 	}
 }
 @import "tailwindcss";

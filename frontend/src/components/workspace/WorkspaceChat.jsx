@@ -38,7 +38,7 @@ export default function WorkspaceChat({
         ) : (
           <div className="empty-chat">
             <h3>Start the conversation</h3>
-            <p>Upload a PDF and ask a question to generate a grounded answer.</p>
+            <p>Upload a document and ask a question to generate a grounded answer.</p>
           </div>
         )}
 
@@ -63,7 +63,7 @@ export default function WorkspaceChat({
         />
         <div className="form-actions">
           <div className="helper-text">
-            {selectedDocumentId ? 'Chat scoped to selected document.' : 'No document selected; searching all uploads.'}
+            {selectedDocumentId ? 'Chat scoped to the selected document.' : 'No document selected; searching all uploads.'}
           </div>
           <button className="primary-button" type="submit" disabled={isSending}>
             {isSending ? 'Sending...' : 'Send question'}
